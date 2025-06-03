@@ -645,7 +645,15 @@ class BaseModel(PydanticBaseModel):
     @classmethod
     def check_mutability_issues(cls, original: "BaseModel", replacement: "BaseModel"):
         """Compare two instances, and check for differences of values on the fields marked as immutable."""
+        from scim2_models.rfc7643.resource import Resource
+
         model = replacement.__class__
+        if (
+            isinstance(original, Resource)
+            and model in original.get_extension_models().values()
+        ):
+            # Model refers to an extension model, so we need to compare the original extension model data
+            original = original[model]
         for field_name in model.model_fields:
             mutability = model.get_field_annotation(field_name, Mutability)
             if mutability == Mutability.immutable and getattr(
