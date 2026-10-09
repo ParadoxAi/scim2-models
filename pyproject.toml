@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "scim2-models"
+name = "paradox-scim2-models"
 version = "0.3.3"
 description = "SCIM2 models serialization and validation with pydantic"
 authors = [{name="Yaal Coop", email="contact@yaal.coop"}]
@@ -29,6 +29,9 @@ requires-python = ">= 3.9"
 dependencies = [
     "pydantic[email]>=2.7.0"
 ]
+
+[tool.hatch.build.targets.wheel]
+packages = ["scim2_models"]
 
 [project.urls]
 documentation = "https://scim2-models.readthedocs.io"
